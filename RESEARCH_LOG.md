@@ -13,6 +13,34 @@ should we have a database to store the predifined laptops.
 
 is there any problem if we use a json file which contains the details of the predefined laptops
 
+so create me a json file which contains the details of 6 laptops.
+
+it should have the fields:
+
+1)name
+
+2)price
+
+3)perfromance score
+
+4)battery
+
+5)weight
+
+the data should be realistic
+
+
+i need to create a criteria.json
+
+which would have the keys:
+1)price
+2)performance
+3)battery
+4)weight
+
+the values should be beneficial or cost in accordance with the key
+
+
 All search queries (including Google searches)
 
 References that influenced your approach
