@@ -22,6 +22,7 @@ For easier build, I am starting at small scale.
 Design decisions and trade-offs
 
 Edge cases considered
+initial budget filtering is done to avoid unecessary comparison.
 
 How to run the project
 

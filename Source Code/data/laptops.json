@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "MacBook Air 13",
+    "price": 95000,
+    "performance": 9,
+    "battery": 15,
+    "weight": 1.24
+  },
+  {
+    "id": 2,
+    "name": "Dell XPS 13",
+    "price": 110000,
+    "performance": 8,
+    "battery": 18,
+    "weight": 1.18
+  },
+  {
+    "id": 3,
+    "name": "Alienware 16",
+    "price": 180000,
+    "performance": 10,
+    "battery": 6,
+    "weight": 2.65
+  },
+  {
+    "id": 4,
+    "name": "Acer Swift 14",
+    "price": 75000,
+    "performance": 7,
+    "battery": 20,
+    "weight": 1.32
+  },
+  {
+    "id": 5,
+    "name": "HP OmniBook 5",
+    "price": 85000,
+    "performance": 7,
+    "battery": 22,
+    "weight": 1.35
+  },
+  {
+    "id": 6,
+    "name": "Acer Aspire Go",
+    "price": 45000,
+    "performance": 5,
+    "battery": 8,
+    "weight": 1.78
+  }
+]

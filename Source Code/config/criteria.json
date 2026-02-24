@@ -1,0 +1,14 @@
+{
+  "price": {
+    "type": "cost"
+  },
+  "performance": {
+    "type": "beneficial"
+  },
+  "battery": {
+    "type": "beneficial"
+  },
+  "weight": {
+    "type": "cost"
+  }
+}

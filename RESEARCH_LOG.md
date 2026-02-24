@@ -9,6 +9,10 @@ the decision system would pick out with maximum score.
 Is this a correct approach or am i missing out something.
 is there any other better way of approach.
 
+should we have a database to store the predifined laptops.
+
+is there any problem if we use a json file which contains the details of the predefined laptops
+
 All search queries (including Google searches)
 
 References that influenced your approach
