@@ -18,6 +18,16 @@ Why you structured the solution the way you did
 For easier build, I am starting at small scale.
 
 
+Data Flow:
+1)user enters the input
+2)system loads the predifined laptop data
+3)merge with the user given laptop data
+4)initial budget filtering
+5)normalization is performed
+6)weighted scoring is applied
+7)ranking is generated
+8)result is provided.
+
 
 Design decisions and trade-offs
 
