@@ -40,6 +40,20 @@ which would have the keys:
 
 the values should be beneficial or cost in accordance with the key
 
+write a code for the loader file.
+that would be capable of:
+
+1) loading data from the existing laptops.json
+2) it should load the criteria of evaluation form criteria.json
+3) it should accept the custom laptop input from the user
+4) if custom input is received it should merge with the pre exisiting one.
+5) it should validate the required fields.
+
+Write a code for the file that would normalize the values using min max normalisation
+it should be capable of:
+1) work in accordance with the criteria mentioned
+2) it should take the laptop list and the criteria as input and provide the normalised scores as the ouput
+
 
 All search queries (including Google searches)
 
