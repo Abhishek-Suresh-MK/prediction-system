@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laptop Decision Companion</title>
+</head>
+<body>
+    <h2>Laptop Decision System</h2>
+
+    <form action="/recommend" method="POST">
+
+        <h3>Budget</h3>
+        <label>Maximum Budget:</label>
+        <input type="number" name="budget" required><br><br>
+
+        <h3>Criteria Weights (Relative Importance)</h3>
+        <label>Price:</label>
+        <input type="number" name="price" step="0.1" value="1" required><br><br>
+
+        <label>Performance:</label>
+        <input type="number" name="performance" step="0.1" value="1" required><br><br>
+
+        <label>Battery:</label>
+        <input type="number" name="battery" step="0.1" value="1" required><br><br>
+
+        <label>Weight:</label>
+        <input type="number" name="weight" step="0.1" value="1" required><br><br>
+
+        <hr>
+
+        <h3>Add Custom Laptop (Optional)</h3>
+
+        <label>Name:</label>
+        <input type="text" name="custom_name"><br><br>
+
+        <label>Price:</label>
+        <input type="number" name="custom_price"><br><br>
+
+        <label>Performance:</label>
+        <input type="number" name="custom_performance"><br><br>
+
+        <label>Battery:</label>
+        <input type="number" name="custom_battery"><br><br>
+
+        <label>Weight:</label>
+        <input type="number" name="custom_weight" step="0.1"><br><br>
+
+        <button type="submit">Get Recommendation</button>
+    </form>
+
+</body>
+</html>
