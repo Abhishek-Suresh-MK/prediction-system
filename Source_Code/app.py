@@ -1,23 +1,20 @@
 from flask import Flask, render_template, request
 
 from engine.loader import LaptopLoader
-from engine.normalizer import LaptopNormalizer
-from engine.scorer import DecisionScorer
+from engine.normalisation import LaptopNormalizer
+from engine.scorer import LaptopScorer
 from engine.ranker import rank_laptops
 from engine.explain import generate_explanation
 
 app = Flask(__name__)
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
 @app.route("/recommend", methods=["POST"])
 def recommend():
     try:
-        # Collect user inputs
         budget = float(request.form.get("budget"))
 
         user_weights = {
@@ -27,7 +24,6 @@ def recommend():
             "weight": float(request.form.get("weight"))
         }
 
-        # Optional custom laptop
         custom_laptop = None
         if request.form.get("custom_name"):
             custom_laptop = {
@@ -38,35 +34,28 @@ def recommend():
                 "weight": float(request.form.get("custom_weight"))
             }
 
-    except (ValueError, TypeError):
-        return "Invalid input. Please enter valid numeric values."
+        loader = LaptopLoader()
+        laptops, criteria = loader.get_combined_data(custom_laptop)
 
-    # Load data
-    loader = LaptopLoader()
-    laptops, criteria = loader.get_combined_data(custom_laptop)
+        filtered = [lap for lap in laptops if lap["price"] <= budget]
 
-    # Apply budget constraint
-    filtered_laptops = [lap for lap in laptops if lap["price"] <= budget]
+        if not filtered:
+            return render_template("result.html", ranked=[], explanation="No laptops within budget.")
 
-    if not filtered_laptops:
-        return render_template("result.html", ranked=[], explanation="No laptops match your budget.")
+        normalizer = LaptopNormalizer(filtered, criteria)
+        normalized = normalizer.normalize_all()
 
-    # Normalize
-    normalizer = LaptopNormalizer(filtered_laptops, criteria)
-    normalized = normalizer.normalize_all()
+        scorer = LaptopScorer(normalized, user_weights)
+        scored = scorer.calculate_scores()
 
-    # Score
-    scorer = DecisionScorer(normalized, user_weights)
-    scored = scorer.calculate_scores()
+        ranked = rank_laptops(scored)
 
-    # Rank
-    ranked = rank_laptops(scored)
+        explanation = generate_explanation(ranked, user_weights)
 
-    # Explain
-    explanation = generate_explanation(ranked, user_weights)
+        return render_template("result.html", ranked=ranked, explanation=explanation)
 
-    return render_template("result.html", ranked=ranked, explanation=explanation)
-
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 if __name__ == "__main__":
     app.run(debug=True)
