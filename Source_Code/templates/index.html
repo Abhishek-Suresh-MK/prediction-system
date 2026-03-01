@@ -1,51 +1,1413 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Laptop Decision Companion</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaptopIQ — Smart Decision System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #2a2a3e;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --accent3: #43e97b;
+  --text: #e8e8f0;
+  --text-muted: #7a7a9a;
+  --mono: 'Space Mono', monospace;
+  --sans: 'Sora', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108,99,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,99,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+header {
+  padding: 48px 0 32px;
+  text-align: center;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.logo-text {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.logo-text span { color: var(--accent); }
+
+header p {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+}
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-header .step {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--accent), #8b85ff);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.card-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.card-header p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* BUDGET */
+.budget-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.input-group {
+  position: relative;
+}
+
+.input-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-family: var(--mono);
+}
+
+.input-group input, .input-group select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus, .input-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+}
+
+.input-group select option { background: var(--surface2); }
+
+.budget-display {
+  background: linear-gradient(135deg, var(--accent), #8b85ff);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 140px;
+  text-align: center;
+}
+
+/* MODE SELECTOR */
+.mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.mode-tab {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.mode-tab:hover { border-color: var(--accent); }
+.mode-tab.active {
+  border-color: var(--accent);
+  background: rgba(108,99,255,0.12);
+}
+
+.mode-tab .mode-icon { font-size: 22px; margin-bottom: 6px; }
+.mode-tab .mode-label { font-size: 13px; font-weight: 700; }
+.mode-tab .mode-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+/* PRESET PROFILES */
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-btn {
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  color: var(--text);
+  font-family: var(--sans);
+}
+
+.profile-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+.profile-btn.active { border-color: var(--accent); background: rgba(108,99,255,0.12); }
+
+.profile-btn .p-icon { font-size: 24px; margin-bottom: 6px; }
+.profile-btn .p-label { font-size: 13px; font-weight: 700; display: block; }
+.profile-btn .p-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+/* WEIGHT SLIDERS */
+.weights-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.weight-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 64px;
+  align-items: center;
+  gap: 14px;
+}
+
+.weight-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.weight-label .sublabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.slider-wrap {
+  position: relative;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.25);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 6px rgba(108,99,255,0.3);
+  transform: scale(1.1);
+}
+
+.weight-val {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--accent);
+}
+
+/* Points remaining bar */
+.points-bar-wrap {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--surface2);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.points-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.points-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.points-remaining {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.points-remaining.ok { color: var(--accent3); }
+.points-remaining.warn { color: #ffbe0b; }
+.points-remaining.over { color: var(--accent2); }
+
+.progress-bar-outer {
+  height: 8px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s, background 0.3s;
+  background: linear-gradient(90deg, var(--accent), #8b85ff);
+}
+
+.progress-bar-inner.warn { background: linear-gradient(90deg, #ffbe0b, #ff9f0a); }
+.progress-bar-inner.over { background: linear-gradient(90deg, var(--accent2), #ff3366); }
+
+/* CUSTOM LAPTOPS */
+.custom-laptop-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  position: relative;
+  animation: slideIn 0.25s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-laptop-card .card-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-btn {
+  background: none;
+  border: 1px solid var(--accent2);
+  color: var(--accent2);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.remove-btn:hover { background: rgba(255,101,132,0.15); }
+
+.custom-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.add-laptop-btn {
+  width: 100%;
+  background: transparent;
+  border: 2px dashed var(--border);
+  color: var(--text-muted);
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.add-laptop-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: rgba(108,99,255,0.05);
+}
+
+/* GPU/RAM dropdowns */
+.spec-select {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: var(--sans);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.spec-select:focus { border-color: var(--accent); }
+
+/* SUBMIT */
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), #8b85ff);
+  border: none;
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--sans);
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #8b85ff, var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.submit-btn:hover::before { opacity: 1; }
+.submit-btn span { position: relative; z-index: 1; }
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* RESULTS */
+#results-section { display: none; }
+
+.winner-banner {
+  background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(67,233,123,0.1));
+  border: 1px solid rgba(108,99,255,0.4);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.winner-banner::before {
+  content: '🏆';
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 64px;
+  opacity: 0.15;
+}
+
+.winner-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.winner-name {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.winner-score {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.winner-score strong {
+  color: var(--accent3);
+  font-size: 18px;
+}
+
+/* CHAMPIONS */
+.champions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.champion-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.champion-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.champion-type {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.champion-laptop {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+/* EXPLANATION */
+.explanation-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.explanation-box strong { color: var(--text); }
+.explanation-box em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+/* BREAKDOWN TABLE */
+.breakdown-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.breakdown-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 1fr 60px 80px 80px;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.breakdown-row:first-child { border-color: rgba(108,99,255,0.4); }
+
+.breakdown-crit { font-weight: 700; }
+.breakdown-pct {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.score-bar-wrap {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.score-bar {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent3));
+}
+
+.breakdown-val {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-align: right;
+  color: var(--accent3);
+}
+
+/* RANKING TABLE */
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ranking-table thead th {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.ranking-table tbody tr {
+  border-bottom: 1px solid rgba(42,42,62,0.5);
+  transition: background 0.15s;
+}
+
+.ranking-table tbody tr:hover {
+  background: rgba(108,99,255,0.05);
+}
+
+.ranking-table tbody td {
+  padding: 12px 14px;
+  vertical-align: middle;
+}
+
+.rank-badge {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  background: var(--surface2);
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rank-badge.gold { background: rgba(255,215,0,0.2); color: #ffd700; }
+.rank-badge.silver { background: rgba(192,192,192,0.2); color: #c0c0c0; }
+.rank-badge.bronze { background: rgba(205,127,50,0.2); color: #cd7f32; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.tag-gaming { background: rgba(255,101,132,0.2); color: var(--accent2); }
+.tag-office { background: rgba(108,99,255,0.2); color: var(--accent); }
+.tag-custom { background: rgba(67,233,123,0.2); color: var(--accent3); }
+
+.score-chip {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* WARNINGS */
+.warning-box {
+  background: rgba(255,190,11,0.08);
+  border: 1px solid rgba(255,190,11,0.3);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #ffbe0b;
+  margin-bottom: 12px;
+}
+
+/* LOADING */
+.loader-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,15,0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loader-overlay.active { display: flex; }
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loader-text {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 14px;
+  z-index: 200;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.error { border-color: var(--accent2); color: var(--accent2); }
+
+/* New search btn */
+.new-search-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: var(--sans);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 40px;
+}
+
+.new-search-btn:hover { border-color: var(--accent); color: var(--text); }
+
+/* Section header */
+.section-header {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .profiles-grid { grid-template-columns: 1fr 1fr; }
+  .weight-row { grid-template-columns: 1fr 48px; grid-template-rows: auto auto; }
+  .weight-row .slider-wrap { grid-column: 1 / -1; }
+  .custom-fields { grid-template-columns: 1fr 1fr; }
+  .champions-row { grid-template-columns: 1fr; }
+  .ranking-table { font-size: 12px; }
+  .breakdown-row { grid-template-columns: 1fr 60px; }
+  .breakdown-row > *:nth-child(3) { display: none; }
+}
+</style>
 </head>
 <body>
-    <h2>Laptop Decision System</h2>
 
-    <form action="/recommend" method="POST">
+<div class="loader-overlay" id="loader">
+  <div class="spinner"></div>
+  <div class="loader-text">Analysing laptops...</div>
+</div>
 
-        <h3>Budget</h3>
-        <label>Maximum Budget:</label>
-        <input type="number" name="budget" required><br><br>
+<div class="toast" id="toast"></div>
 
-        <h3>Criteria Weights (Relative Importance)</h3>
-        <label>Price:</label>
-        <input type="number" name="price" step="0.1" value="1" required><br><br>
+<div class="container">
 
-        <label>Performance:</label>
-        <input type="number" name="performance" step="0.1" value="1" required><br><br>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">💻</div>
+      <div class="logo-text">Laptop<span>IQ</span></div>
+    </div>
+    <p>Intelligent multi-criteria decision system — find your perfect machine</p>
+  </header>
 
-        <label>Battery:</label>
-        <input type="number" name="battery" step="0.1" value="1" required><br><br>
+  <!-- FORM SECTION -->
+  <div id="form-section">
 
-        <label>Weight:</label>
-        <input type="number" name="weight" step="0.1" value="1" required><br><br>
+    <!-- Step 1: Budget & Mode -->
+    <div class="card">
+      <div class="card-header">
+        <div class="step">01</div>
+        <div>
+          <h2>Budget & Data Source</h2>
+          <p>Set your maximum budget and choose which laptops to consider</p>
+        </div>
+      </div>
 
-        <hr>
+      <div style="margin-bottom: 20px;">
+        <div class="input-group">
+          <label>Maximum Budget (₹)</label>
+          <input type="number" id="budget" placeholder="e.g. 120000" min="1">
+        </div>
+      </div>
 
-        <h3>Add Custom Laptop (Optional)</h3>
+      <div class="input-group" style="margin-bottom: 0;">
+        <label>Data Mode</label>
+        <div class="mode-tabs">
+          <div class="mode-tab active" data-mode="predefined">
+            <div class="mode-icon">📚</div>
+            <div class="mode-label">Predefined</div>
+            <div class="mode-desc">Use our database</div>
+          </div>
+          <div class="mode-tab" data-mode="custom">
+            <div class="mode-icon">✏️</div>
+            <div class="mode-label">Custom Only</div>
+            <div class="mode-desc">Your laptops only</div>
+          </div>
+          <div class="mode-tab" data-mode="combined">
+            <div class="mode-icon">🔀</div>
+            <div class="mode-label">Combined</div>
+            <div class="mode-desc">Database + your own</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <label>Name:</label>
-        <input type="text" name="custom_name"><br><br>
+    <!-- Step 2: Presets & Weights -->
+    <div class="card">
+      <div class="card-header">
+        <div class="step">02</div>
+        <div>
+          <h2>Priority Weights</h2>
+          <p>Allocate exactly 100 points across criteria — or pick a preset</p>
+        </div>
+      </div>
 
-        <label>Price:</label>
-        <input type="number" name="custom_price"><br><br>
+      <div class="section-header">Quick Presets</div>
+      <div class="profiles-grid" id="profiles-grid">
+        <button class="profile-btn" data-profile="office">
+          <div class="p-icon">💼</div>
+          <span class="p-label">Office</span>
+          <div class="p-desc">Work & productivity</div>
+        </button>
+        <button class="profile-btn" data-profile="gaming">
+          <div class="p-icon">🎮</div>
+          <span class="p-label">Gaming</span>
+          <div class="p-desc">Max GPU & CPU</div>
+        </button>
+        <button class="profile-btn" data-profile="student">
+          <div class="p-icon">🎓</div>
+          <span class="p-label">Student</span>
+          <div class="p-desc">Budget & battery</div>
+        </button>
+        <button class="profile-btn" data-profile="creator">
+          <div class="p-icon">🎨</div>
+          <span class="p-label">Creator</span>
+          <div class="p-desc">Display & power</div>
+        </button>
+      </div>
 
-        <label>Performance:</label>
-        <input type="number" name="custom_performance"><br><br>
+      <div class="section-header">Fine-tune</div>
+      <div class="weights-grid" id="weights-grid">
+        <!-- generated by JS -->
+      </div>
 
-        <label>Battery:</label>
-        <input type="number" name="custom_battery"><br><br>
+      <div class="points-bar-wrap">
+        <div class="points-row">
+          <div class="points-label">Points Used</div>
+          <div class="points-remaining ok" id="points-remaining">0 / 100</div>
+        </div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
 
-        <label>Weight:</label>
-        <input type="number" name="custom_weight" step="0.1"><br><br>
+    <!-- Step 3: Custom Laptops -->
+    <div class="card" id="custom-section">
+      <div class="card-header">
+        <div class="step">03</div>
+        <div>
+          <h2>Custom Laptops</h2>
+          <p>Add your own laptops to compare — use exact spec strings for best matching</p>
+        </div>
+      </div>
 
-        <button type="submit">Get Recommendation</button>
-    </form>
+      <div id="custom-laptops-container"></div>
 
+      <button class="add-laptop-btn" id="add-laptop-btn">
+        <span>+</span> Add Custom Laptop
+      </button>
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" id="submit-btn">
+      <span>🔍 Find My Best Laptop</span>
+    </button>
+
+  </div>
+
+  <!-- RESULTS SECTION -->
+  <div id="results-section">
+
+    <div class="winner-banner" id="winner-banner"></div>
+
+    <div class="champions-row" id="champions-row"></div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="step" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">💡</div>
+        <div>
+          <h2>Why This Laptop?</h2>
+          <p>Detailed explanation based on your priorities</p>
+        </div>
+      </div>
+      <div class="explanation-box" id="explanation-box"></div>
+      <div id="warnings-container"></div>
+      <div class="section-header">Score Breakdown</div>
+      <div class="breakdown-grid" id="breakdown-grid"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="step" style="background: linear-gradient(135deg, #f093fb, #f5576c);">📊</div>
+        <div>
+          <h2>Full Ranking</h2>
+          <p id="ranking-subtitle"></p>
+        </div>
+      </div>
+      <table class="ranking-table" id="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Laptop</th>
+            <th>Price</th>
+            <th>GPU</th>
+            <th>RAM</th>
+            <th>Battery</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-body"></tbody>
+      </table>
+    </div>
+
+    <button class="new-search-btn" id="new-search-btn">← New Search</button>
+
+  </div>
+
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+const PROFILES = {
+  office:  { label:"Office",  weights:{ price:20, cpu_score:15, gpu_score:5,  ram_score:15, storage_score:10, battery:25, weight:10, display_score:0  } },
+  gaming:  { label:"Gaming",  weights:{ price:10, cpu_score:20, gpu_score:35, ram_score:15, storage_score:10, battery:0,  weight:0,  display_score:10 } },
+  student: { label:"Student", weights:{ price:30, cpu_score:10, gpu_score:5,  ram_score:10, storage_score:10, battery:20, weight:15, display_score:0  } },
+  creator: { label:"Creator", weights:{ price:10, cpu_score:20, gpu_score:20, ram_score:15, storage_score:15, battery:5,  weight:5,  display_score:10 } }
+};
+
+const CRITERIA = [
+  { key:"price",         label:"Price",           sublabel:"(lower is better)", color:"#ff6584" },
+  { key:"cpu_score",     label:"CPU Performance", sublabel:"(benchmark score)",  color:"#6c63ff" },
+  { key:"gpu_score",     label:"GPU / Graphics",  sublabel:"(gaming/rendering)", color:"#f093fb" },
+  { key:"ram_score",     label:"RAM",             sublabel:"(memory capacity)",  color:"#43e97b" },
+  { key:"storage_score", label:"Storage",         sublabel:"(speed + size)",     color:"#38f9d7" },
+  { key:"battery",       label:"Battery Life",    sublabel:"(hours of use)",     color:"#ffbe0b" },
+  { key:"weight",        label:"Portability",     sublabel:"(lower = lighter)",  color:"#ff9f0a" },
+  { key:"display_score", label:"Display Quality", sublabel:"(resolution/panel)", color:"#a8edea" }
+];
+
+const GPU_OPTIONS = [
+  "RTX 4090","RTX 4080","RTX 4070 Ti","RTX 4070","RTX 4060 Ti","RTX 4060","RTX 4050",
+  "RTX 3080","RTX 3070","RTX 3060","RTX 3050 Ti","RTX 3050",
+  "RTX 2080","RTX 2070","RTX 2060",
+  "GTX 1660 Ti","GTX 1650 Ti","GTX 1650",
+  "Apple M3 Pro GPU (18-core)","Apple M3 GPU (10-core)","Apple M2 GPU (10-core)","Apple M1 GPU (8-core)",
+  "Intel Arc","Intel Iris Xe","Intel UHD",
+  "AMD Radeon 680M","AMD Radeon Vega 8"
+];
+const RAM_OPTIONS = ["4GB","8GB","12GB","16GB","18GB","24GB","32GB","48GB","64GB"];
+const STORAGE_OPTIONS = ["128GB SSD","256GB SSD","256GB NVMe","512GB SATA SSD","512GB NVMe","1TB SATA SSD","1TB NVMe","2TB NVMe","4TB NVMe"];
+const DISPLAY_OPTIONS = ["1366x768 TN","1920x1080 TN","1920x1080 IPS","1920x1080 IPS 120Hz","1920x1200 IPS","2560x1440 IPS","2560x1440 IPS 144Hz","2560x1600 IPS","2560x1600 IPS 165Hz","2560x1600 IPS 240Hz","2560x1664 IPS","2880x1800 IPS","2880x1800 OLED","4K IPS","4K IPS 144Hz","4K OLED 144Hz","3024x1964 Liquid Retina XDR"];
+
+// ─── STATE ──────────────────────────────────────────────
+let currentMode = "predefined";
+let customLaptopCount = 0;
+
+// ─── INIT SLIDERS ───────────────────────────────────────
+function initSliders() {
+  const grid = document.getElementById("weights-grid");
+  grid.innerHTML = "";
+  CRITERIA.forEach(c => {
+    const row = document.createElement("div");
+    row.className = "weight-row";
+    row.innerHTML = `
+      <div class="weight-label">
+        ${c.label}
+        <div class="sublabel">${c.sublabel}</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" min="0" max="100" value="0" step="1"
+               id="slider-${c.key}" data-key="${c.key}"
+               style="accent-color: ${c.color}">
+      </div>
+      <div class="weight-val" id="val-${c.key}">0</div>
+    `;
+    grid.appendChild(row);
+    row.querySelector(`#slider-${c.key}`).addEventListener("input", onSliderChange);
+  });
+}
+
+function onSliderChange() {
+  updatePointsBar();
+  clearActiveProfile();
+}
+
+function setWeights(weights) {
+  CRITERIA.forEach(c => {
+    const slider = document.getElementById(`slider-${c.key}`);
+    const val = weights[c.key] ?? 0;
+    slider.value = val;
+    document.getElementById(`val-${c.key}`).textContent = val;
+  });
+  updatePointsBar();
+}
+
+function getWeights() {
+  const w = {};
+  CRITERIA.forEach(c => {
+    w[c.key] = parseInt(document.getElementById(`slider-${c.key}`).value);
+  });
+  return w;
+}
+
+function updatePointsBar() {
+  const weights = getWeights();
+  CRITERIA.forEach(c => {
+    document.getElementById(`val-${c.key}`).textContent = weights[c.key];
+  });
+  const total = Object.values(weights).reduce((a, b) => a + b, 0);
+  const pct = Math.min(total, 100);
+  const remaining = document.getElementById("points-remaining");
+  const bar = document.getElementById("progress-bar");
+  remaining.textContent = `${total} / 100`;
+  bar.style.width = `${pct}%`;
+  remaining.className = "points-remaining " + (total === 100 ? "ok" : total > 100 ? "over" : "warn");
+  bar.className = "progress-bar-inner " + (total > 100 ? "over" : total < 85 ? "warn" : "");
+}
+
+function clearActiveProfile() {
+  document.querySelectorAll(".profile-btn").forEach(b => b.classList.remove("active"));
+}
+
+// ─── PROFILES ───────────────────────────────────────────
+document.querySelectorAll(".profile-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const profile = btn.dataset.profile;
+    setWeights(PROFILES[profile].weights);
+    document.querySelectorAll(".profile-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+// ─── MODE TABS ──────────────────────────────────────────
+document.querySelectorAll(".mode-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".mode-tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    currentMode = tab.dataset.mode;
+    const customSection = document.getElementById("custom-section");
+    customSection.style.display = (currentMode === "predefined") ? "none" : "";
+  });
+});
+
+// ─── CUSTOM LAPTOPS ─────────────────────────────────────
+function makeSelectOptions(options) {
+  return options.map(o => `<option value="${o}">${o}</option>`).join("");
+}
+
+function addCustomLaptop() {
+  customLaptopCount++;
+  const id = customLaptopCount;
+  const container = document.getElementById("custom-laptops-container");
+  const card = document.createElement("div");
+  card.className = "custom-laptop-card";
+  card.id = `custom-laptop-${id}`;
+  card.innerHTML = `
+    <div class="card-title">
+      <span>LAPTOP ${id}</span>
+      <button class="remove-btn" onclick="removeLaptop(${id})">✕ Remove</button>
+    </div>
+    <div class="custom-fields">
+      <div class="input-group" style="grid-column: 1/-1">
+        <label>Laptop Name</label>
+        <input type="text" class="cl-name" placeholder="e.g. My Custom Laptop">
+      </div>
+      <div class="input-group">
+        <label>Price (₹)</label>
+        <input type="number" class="cl-price" placeholder="95000">
+      </div>
+      <div class="input-group">
+        <label>CPU Score (0–100)</label>
+        <input type="number" class="cl-cpu" min="0" max="100" placeholder="75">
+      </div>
+      <div class="input-group">
+        <label>Battery Life (hrs)</label>
+        <input type="number" class="cl-battery" min="0" max="30" placeholder="12">
+      </div>
+      <div class="input-group">
+        <label>Weight (kg)</label>
+        <input type="number" class="cl-weight" step="0.01" min="0.5" max="5" placeholder="1.5">
+      </div>
+      <div class="input-group">
+        <label>GPU</label>
+        <select class="cl-gpu spec-select">
+          <option value="">-- Select GPU --</option>
+          ${makeSelectOptions(GPU_OPTIONS)}
+        </select>
+      </div>
+      <div class="input-group">
+        <label>RAM</label>
+        <select class="cl-ram spec-select">
+          ${makeSelectOptions(RAM_OPTIONS)}
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Storage</label>
+        <select class="cl-storage spec-select">
+          ${makeSelectOptions(STORAGE_OPTIONS)}
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Display</label>
+        <select class="cl-display spec-select">
+          ${makeSelectOptions(DISPLAY_OPTIONS)}
+        </select>
+      </div>
+    </div>
+  `;
+  container.appendChild(card);
+}
+
+function removeLaptop(id) {
+  const el = document.getElementById(`custom-laptop-${id}`);
+  if (el) el.remove();
+}
+
+function getCustomLaptops() {
+  const cards = document.querySelectorAll(".custom-laptop-card");
+  return Array.from(cards).map(card => ({
+    name:     card.querySelector(".cl-name").value,
+    price:    card.querySelector(".cl-price").value,
+    cpu_score:card.querySelector(".cl-cpu").value,
+    battery:  card.querySelector(".cl-battery").value,
+    weight:   card.querySelector(".cl-weight").value,
+    gpu:      card.querySelector(".cl-gpu").value,
+    ram:      card.querySelector(".cl-ram").value,
+    storage:  card.querySelector(".cl-storage").value,
+    display:  card.querySelector(".cl-display").value
+  }));
+}
+
+document.getElementById("add-laptop-btn").addEventListener("click", addCustomLaptop);
+
+// ─── SUBMIT ─────────────────────────────────────────────
+document.getElementById("submit-btn").addEventListener("click", async () => {
+  const budget = parseFloat(document.getElementById("budget").value);
+  if (!budget || budget <= 0) {
+    showToast("Please enter a valid budget.", "error");
+    return;
+  }
+  const weights = getWeights();
+  const total = Object.values(weights).reduce((a, b) => a + b, 0);
+  if (total !== 100) {
+    showToast(`Weights must total exactly 100. Current: ${total}`, "error");
+    return;
+  }
+
+  const customLaptops = currentMode !== "predefined" ? getCustomLaptops() : [];
+  if (currentMode === "custom" && customLaptops.length === 0) {
+    showToast("Add at least one custom laptop for custom mode.", "error");
+    return;
+  }
+
+  showLoader(true);
+
+  try {
+    const response = await fetch("/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ budget, mode: currentMode, weights, custom_laptops: customLaptops })
+    });
+
+    const data = await response.json();
+    if (data.error) {
+      showToast(data.error, "error");
+      return;
+    }
+    renderResults(data);
+  } catch (e) {
+    showToast("Server error. Please try again.", "error");
+  } finally {
+    showLoader(false);
+  }
+});
+
+// ─── RENDER RESULTS ─────────────────────────────────────
+function renderResults(data) {
+  document.getElementById("form-section").style.display = "none";
+  document.getElementById("results-section").style.display = "block";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const { ranked, explanation, champions, total_before_filter, total_after_filter } = data;
+
+  if (!ranked || ranked.length === 0) {
+    document.getElementById("winner-banner").innerHTML = `
+      <div class="winner-label">No Results</div>
+      <div class="winner-name">No laptops within budget</div>
+      <div class="winner-score">Try increasing your budget.</div>
+    `;
+    document.getElementById("champions-row").innerHTML = "";
+    document.getElementById("explanation-box").innerHTML = "No laptops matched your budget.";
+    document.getElementById("breakdown-grid").innerHTML = "";
+    document.getElementById("ranking-body").innerHTML = "";
+    return;
+  }
+
+  const winner = ranked[0];
+
+  // Winner banner
+  document.getElementById("winner-banner").innerHTML = `
+    <div class="winner-label">🏆 Top Recommendation</div>
+    <div class="winner-name">${winner.name}</div>
+    <div class="winner-score">
+      Utility Score: <strong>${(winner.final_score * 100).toFixed(1)}</strong>/100
+      &nbsp;·&nbsp; ₹${winner.price.toLocaleString()}
+      ${winner.category_tags.includes("custom") ? '<span class="tag tag-custom">custom</span>' : ''}
+    </div>
+  `;
+
+  // Champions
+  const champRow = document.getElementById("champions-row");
+  champRow.innerHTML = "";
+  if (champions.gaming) {
+    champRow.innerHTML += `
+      <div class="champion-card">
+        <div class="champion-icon">🎮</div>
+        <div>
+          <div class="champion-type">Best Gaming Pick</div>
+          <div class="champion-laptop">${champions.gaming}</div>
+        </div>
+      </div>`;
+  }
+  if (champions.office) {
+    champRow.innerHTML += `
+      <div class="champion-card">
+        <div class="champion-icon">💼</div>
+        <div>
+          <div class="champion-type">Best Office Pick</div>
+          <div class="champion-laptop">${champions.office}</div>
+        </div>
+      </div>`;
+  }
+  if (!champions.gaming && !champions.office) champRow.style.display = "none";
+
+  // Explanation
+  document.getElementById("explanation-box").innerHTML = explanation.summary || "";
+
+  // Warnings
+  const warnContainer = document.getElementById("warnings-container");
+  warnContainer.innerHTML = "";
+  (explanation.warnings || []).forEach(w => {
+    const div = document.createElement("div");
+    div.className = "warning-box";
+    div.textContent = w;
+    warnContainer.appendChild(div);
+  });
+
+  // Breakdown
+  const breakdownGrid = document.getElementById("breakdown-grid");
+  breakdownGrid.innerHTML = "";
+  (explanation.breakdown || []).forEach((b, i) => {
+    if (b.weight_pct === 0) return;
+    const row = document.createElement("div");
+    row.className = "breakdown-row";
+    row.innerHTML = `
+      <div>
+        <div class="breakdown-crit">${b.criterion}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
+          Raw: ${b.raw_value} ${b.unit} &nbsp;·&nbsp; ${b.vs_avg}
+        </div>
+      </div>
+      <div class="breakdown-pct">${b.weight_pct}%</div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width:${b.norm_score}%"></div>
+      </div>
+      <div class="breakdown-val">${b.norm_score}/100</div>
+    `;
+    breakdownGrid.appendChild(row);
+  });
+
+  // Subtitle
+  document.getElementById("ranking-subtitle").textContent =
+    `Showing ${total_after_filter} of ${total_before_filter} laptops within budget`;
+
+  // Ranking table
+  const tbody = document.getElementById("ranking-body");
+  tbody.innerHTML = "";
+  ranked.forEach(lap => {
+    const badgeClass = lap.rank === 1 ? "gold" : lap.rank === 2 ? "silver" : lap.rank === 3 ? "bronze" : "";
+    const tags = (lap.category_tags || []).map(t => {
+      if (t === "gaming") return `<span class="tag tag-gaming">gaming</span>`;
+      if (t === "office" || t === "business") return `<span class="tag tag-office">office</span>`;
+      if (t === "custom") return `<span class="tag tag-custom">custom</span>`;
+      return "";
+    }).join("");
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="rank-badge ${badgeClass}">${lap.rank}</span></td>
+      <td>${lap.name} ${tags}</td>
+      <td style="font-family:var(--mono);font-size:12px">₹${lap.price.toLocaleString()}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${lap.gpu || '—'}</td>
+      <td style="font-size:12px">${lap.ram || '—'}</td>
+      <td style="font-size:12px">${lap.battery ? lap.battery+'h' : '—'}</td>
+      <td><span class="score-chip">${(lap.final_score * 100).toFixed(1)}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ─── NEW SEARCH ─────────────────────────────────────────
+document.getElementById("new-search-btn").addEventListener("click", () => {
+  document.getElementById("results-section").style.display = "none";
+  document.getElementById("form-section").style.display = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+// ─── HELPERS ────────────────────────────────────────────
+function showLoader(show) {
+  document.getElementById("loader").classList.toggle("active", show);
+}
+
+function showToast(msg, type = "") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show" + (type ? " " + type : "");
+  setTimeout(() => t.classList.remove("show"), 3500);
+}
+
+// ─── BOOT ───────────────────────────────────────────────
+initSliders();
+setWeights(PROFILES.office.weights);
+document.querySelector('[data-profile="office"]').classList.add("active");
+document.getElementById("custom-section").style.display = "none";
+</script>
 </body>
 </html>
