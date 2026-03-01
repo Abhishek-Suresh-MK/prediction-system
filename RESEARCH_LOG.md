@@ -95,6 +95,42 @@ it should be capable of :
 loader.py,normalisation.py,scorer.py,ranker.py,explain.py are created in accordance with the various procedures.
 
 
+i am building a laptop decision companion  system.
+i am building this application using the flask framework.
+the current version has a pre defined set of laptops as laptops.json file
+there is also a option to take custom laptop input from the user.
+but there is no option to add multiple custom laptops.
+the loader.py is the file that is used to combine the laptop data inbuilt as well as user defined.
+there should be a system where you can either choose only user defined data or the combined one.
+there should be a initial filtering system that would remove the out of budget options.
+we are performing min max normalisation of the laptop specs.
+we will take the weights of each category based on the preferences.
+currently we have price,performance,battery life and laptop weight.
+i think we can convert it to a  more advanced way of being able to select
+ram,graphics card,storage etc .
+it should automatically map to a pre defined numerical values.
+like the value of rtx 3050  should be greater than rtx 2050.
+like wise.
+i think the preference should be based on a scale of 100
+user could determine their preferences of specifications based on total 100%
+after normalisation suitable weight should be multiplied and the output should be obtained and final score of each laptop should be obtained.
+based on the final score the laptop should be ranked accordingly.
+there should be a explanation of based on the best  laptop.
+why it is the best, what are there are features etc.
+there should be also a option that would recommend the best office laptop as well as gaming laptop from the list.
+give me your full understanding thoughts on the logic, architecture etc
+what would have been done better ?
+what are your recommendations etc.
+
+
+so build we the advacned version 
+where the there is a hundred point weight allocation system 
+as well as the the preset office as well as gaming profiles.
+3 mode data set collection
+adding multiple custom laptops.
+better explanation engine and other features.
+
+
 
 
 
