@@ -1,0 +1,62 @@
+{
+  "office": {
+    "label": "Office / Productivity",
+    "icon": "briefcase",
+    "description": "Balanced for daily work, meetings, documents, and long battery life.",
+    "weights": {
+      "price": 20,
+      "cpu_score": 15,
+      "gpu_score": 5,
+      "ram_score": 15,
+      "storage_score": 10,
+      "battery": 25,
+      "weight": 10,
+      "display_score": 0
+    }
+  },
+  "gaming": {
+    "label": "Gaming",
+    "icon": "gamepad-2",
+    "description": "Maximised for GPU power, CPU performance, and display refresh rate.",
+    "weights": {
+      "price": 10,
+      "cpu_score": 20,
+      "gpu_score": 35,
+      "ram_score": 15,
+      "storage_score": 10,
+      "battery": 0,
+      "weight": 0,
+      "display_score": 10
+    }
+  },
+  "student": {
+    "label": "Student",
+    "icon": "graduation-cap",
+    "description": "Budget-conscious, lightweight, good battery for campus use.",
+    "weights": {
+      "price": 30,
+      "cpu_score": 10,
+      "gpu_score": 5,
+      "ram_score": 10,
+      "storage_score": 10,
+      "battery": 20,
+      "weight": 15,
+      "display_score": 0
+    }
+  },
+  "creator": {
+    "label": "Content Creator",
+    "icon": "palette",
+    "description": "Powerful CPU/GPU, excellent display for video/photo editing.",
+    "weights": {
+      "price": 10,
+      "cpu_score": 20,
+      "gpu_score": 20,
+      "ram_score": 15,
+      "storage_score": 15,
+      "battery": 5,
+      "weight": 5,
+      "display_score": 10
+    }
+  }
+}
