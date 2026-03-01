@@ -1,14 +1,50 @@
 {
   "price": {
-    "type": "cost"
+    "type": "cost",
+    "label": "Price",
+    "unit": "₹",
+    "description": "Lower price is better"
   },
-  "performance": {
-    "type": "beneficial"
+  "cpu_score": {
+    "type": "beneficial",
+    "label": "CPU Performance",
+    "unit": "score",
+    "description": "Higher CPU benchmark score is better"
+  },
+  "gpu_score": {
+    "type": "beneficial",
+    "label": "GPU / Graphics",
+    "unit": "score",
+    "description": "Higher GPU tier score is better"
+  },
+  "ram_score": {
+    "type": "beneficial",
+    "label": "RAM",
+    "unit": "score",
+    "description": "More RAM is better"
+  },
+  "storage_score": {
+    "type": "beneficial",
+    "label": "Storage",
+    "unit": "score",
+    "description": "Faster and larger storage is better"
   },
   "battery": {
-    "type": "beneficial"
+    "type": "beneficial",
+    "label": "Battery Life",
+    "unit": "hrs",
+    "description": "Longer battery is better"
   },
   "weight": {
-    "type": "cost"
+    "type": "cost",
+    "label": "Portability (Weight)",
+    "unit": "kg",
+    "description": "Lighter is better"
+  },
+  "display_score": {
+    "type": "beneficial",
+    "label": "Display Quality",
+    "unit": "score",
+    "description": "Higher resolution and panel quality is better"
   }
 }
