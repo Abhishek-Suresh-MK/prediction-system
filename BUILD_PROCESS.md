@@ -1,4 +1,4 @@
-How I started
+##How I started
 
 i planned to do this project using flask framework (because i have prior experience in flask).so i have decided to build a laptop selection decision companion system.
 There should be list of predefined laptops with specifications(optional).
