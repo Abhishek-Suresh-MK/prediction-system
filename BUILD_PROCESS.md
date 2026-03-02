@@ -1,4 +1,4 @@
-##How I started
+# How I started
 
 i planned to do this project using flask framework (because i have prior experience in flask).so i have decided to build a laptop selection decision companion system.
 There should be list of predefined laptops with specifications(optional).
@@ -7,7 +7,7 @@ the input data will be converted to numerical data.normalisation and weights sho
 
 The first working prototype had five engine files and could produce a ranked list from a budget input.
 
-How my thinking evolved
+# How my thinking evolved
 
 
 I considered about getting the final score by just calculating according to the weights, later i understood about the role of normalisation in the process.
@@ -19,7 +19,7 @@ It is related to the normalisation part
 where in the beneficial case as the value of ram is higher a high value is allotted
 where in the cost case the as the value of weight is lower a high value is allotted>
 
-version 1
+## version 1
 
 intial there were only 5 components in the engine part
 1)loader.py - to load the predefined data from the json file
@@ -35,7 +35,7 @@ it will make confusions in respect to the user
 suppose if the user is purchasing a laptop and if he want to refer this site.
 what is he supposed to do if asked about the score of the gpu.
 
-version 2
+## version 2
 
 so i decided to use real world data as input
 modified the laptops.json so that it contains details about the storage,ram,gpu,etc.
@@ -63,7 +63,7 @@ the spec_mapper.py was created to automatically map spec to score
 
 The processor input was missed in this version and it was rectified and processor details were added to the files
 
-Version 3
+## Version 3
 
 The weight allocation system was not limited.which meant a user could give weights with no   limits.To counter this problem I redesigned this into a budget of 100 points distributed across all criteria
 
@@ -71,14 +71,14 @@ this idea was inspired from a game known as e football(pes)
 where the player progression point can be used increase the stats of the player.
 so the 100 weight points was divided between the features.Exceeding 100 weight points disable the user to get recommendations.
 
-profile System
+## profile System
 
 profiles.json has made to make pre set weight templates
 it has been made so that it improves the user experiences.
 After clicking the get recommendation button the user will get the best laptop
 It also finds the best laptop for office as well gaming in that budget(applies to only predefined)
 
-3-Mode Data Collection
+## 3-Mode Data Collection
 
 The final version supports three dataset modes:
 Predefined only — rank only the 12 built-in laptops
@@ -86,7 +86,7 @@ Custom only — rank only the laptops the user added
 Combined  — rank everything together
 
 
-Alternative approaches considered
+# Alternative approaches considered
 
 i have thought about implementing a database.
 I did'nt implement it beacuse we are priortising more on the custom laptop input rather than that of the predefined one.Moreover a simple json file will satsfy our requirements.
@@ -94,7 +94,7 @@ I did'nt implement it beacuse we are priortising more on the custom laptop input
 Had the idea about using ai for the data collection part by using a query.
 dropped it because of the technical difficulties.
 
-Refactoring decisions
+# Refactoring decisions
 
 The processor input was added later,when all other inputs have been mapped and ready to use.
 while replacing the cpu perfromance score with the cpu.there where some key errors.
@@ -107,7 +107,7 @@ The early version used relative file paths (open("data/laptops.json")). On Rende
 
 
 
-Mistakes and corrections
+# Mistakes and corrections
 
 When adding the performance input there was a cpu_score key mismatch.
 the actual key was cpu.It was fixed later on
@@ -119,7 +119,7 @@ for gaming laptops with high end graphics card is better
 for editing purposes a good mac book is better
 
 
-What changed during development and why
+# What changed during development and why
 
 1) changed numeric specs to real world specs: Users know processor names, not benchmark scores
 
