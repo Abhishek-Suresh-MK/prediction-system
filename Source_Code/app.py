@@ -3,11 +3,11 @@ import os
 import logging
 from flask import Flask, render_template, request, jsonify
 
-from engine.loader import LaptopLoader
-from engine.normalisation import LaptopNormalizer
-from engine.scorer import LaptopScorer
-from engine.ranker import rank_laptops, find_category_champions
-from engine.explain import generate_explanation
+from Source_Code.engine.loader import LaptopLoader
+from Source_Code.engine.normalisation import LaptopNormalizer
+from Source_Code.engine.scorer import LaptopScorer
+from Source_Code.engine.ranker import rank_laptops, find_category_champions
+from Source_Code.engine.explain import generate_explanation
 
 # ── Logging ───────────────────────────────────────────────────────
 logging.basicConfig(
