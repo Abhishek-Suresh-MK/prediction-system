@@ -144,7 +144,7 @@ header p {
   align-items: center;
 }
 
-.input-group {
+.rof {
   position: relative;
 }
 
@@ -899,7 +899,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
         </button>
         <button class="profile-btn" data-profile="gaming">
           <div class="p-icon">🎮</div>
-          <span class="p-label">Gaming</span>
+          <span class="p-label">Gaming/Performance</span>
           <div class="p-desc">Max GPU & CPU</div>
         </button>
         <button class="profile-btn" data-profile="student">
@@ -1009,7 +1009,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 // ─── DATA ───────────────────────────────────────────────
 const PROFILES = {
   office:  { label:"Office",  weights:{ price:20, cpu_score:15, gpu_score:5,  ram_score:15, storage_score:10, battery:25, weight:10, display_score:0  } },
-  gaming:  { label:"Gaming",  weights:{ price:10, cpu_score:20, gpu_score:35, ram_score:15, storage_score:10, battery:0,  weight:0,  display_score:10 } },
+  gaming:  { label:"Gaming/Perfromance",  weights:{ price:10, cpu_score:20, gpu_score:35, ram_score:15, storage_score:10, battery:0,  weight:0,  display_score:10 } },
   student: { label:"Student", weights:{ price:30, cpu_score:10, gpu_score:5,  ram_score:10, storage_score:10, battery:20, weight:15, display_score:0  } },
   creator: { label:"Creator", weights:{ price:10, cpu_score:20, gpu_score:20, ram_score:15, storage_score:15, battery:5,  weight:5,  display_score:10 } }
 };
@@ -1373,7 +1373,7 @@ function renderResults(data) {
       <div class="champion-card">
         <div class="champion-icon">🎮</div>
         <div>
-          <div class="champion-type">Best Gaming Pick</div>
+          <div class="champion-type">Best Gaming/Perfromance Pick</div>
           <div class="champion-laptop">${champions.gaming}</div>
         </div>
       </div>`;
@@ -1418,10 +1418,8 @@ function renderResults(data) {
         </div>
       </div>
       <div class="breakdown-pct">${b.weight_pct}%</div>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:${b.norm_score}%"></div>
-      </div>
-      <div class="breakdown-val">${b.norm_score}/100</div>
+      
+      
     `;
     breakdownGrid.appendChild(row);
   });
