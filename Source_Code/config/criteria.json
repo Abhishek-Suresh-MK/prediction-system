@@ -7,9 +7,9 @@
   },
   "cpu_score": {
     "type": "beneficial",
-    "label": "CPU Performance",
-    "unit": "score",
-    "description": "Higher CPU benchmark score is better"
+    "label": "CPU / Processor",
+    "unit": "",
+    "description": "Mapped from processor model via spec_maps.json. Higher score = faster CPU."
   },
   "gpu_score": {
     "type": "beneficial",
