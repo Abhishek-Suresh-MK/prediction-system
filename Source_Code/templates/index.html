@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LaptopIQ — Smart Decision System</title>
+<title>Laptop Decider — Smart Decision System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -276,6 +276,7 @@ header p {
 }
 
 input[type="range"] {
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
   height: 6px;
@@ -832,7 +833,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   <header>
     <div class="logo">
       <div class="logo-icon">💻</div>
-      <div class="logo-text">Laptop<span>IQ</span></div>
+      <div class="logo-text">Laptop<span> Decider</span></div>
     </div>
     <p>Intelligent multi-criteria decision system — find your perfect machine</p>
   </header>
@@ -860,15 +861,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
       <div class="input-group" style="margin-bottom: 0;">
         <label>Data Mode</label>
         <div class="mode-tabs">
-          <div class="mode-tab active" data-mode="predefined">
-            <div class="mode-icon">📚</div>
-            <div class="mode-label">Predefined</div>
-            <div class="mode-desc">Use our database</div>
-          </div>
           <div class="mode-tab" data-mode="custom">
             <div class="mode-icon">✏️</div>
             <div class="mode-label">Custom Only</div>
             <div class="mode-desc">Your laptops only</div>
+          </div>
+          <div class="mode-tab" data-mode="predefined">
+            <div class="mode-icon">📚</div>
+            <div class="mode-label">Predefined</div>
+            <div class="mode-desc">Use our database</div>
           </div>
           <div class="mode-tab" data-mode="combined">
             <div class="mode-icon">🔀</div>
