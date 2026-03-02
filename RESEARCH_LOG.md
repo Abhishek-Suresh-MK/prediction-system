@@ -123,22 +123,51 @@ what would have been done better ?
 what are your recommendations etc.
 
 
-so build we the advacned version 
+so build the advanced version 
 where the there is a hundred point weight allocation system 
 as well as the the preset office as well as gaming profiles.
 3 mode data set collection
 adding multiple custom laptops.
 better explanation engine and other features.
 
+how does the weights work. what are the all parameters of the fine tuning part.
+
+give me test cases for all criterias
+1) predefined
+2) custom
+3) combined
+
+so we need to make changes to the weight cpu performance.
+i am thinking about adding the processor instead of the cpu score input.
+collect the necessary processor and assign the suitable values in the spec_maps.json
+
+why spec mapper has hardcoded the cpu option in if conditions
+
+give me the yaml file and instructions to deploy on the render.
+make it suitable for hosting
+
+give the sample test cases for all situation
+
+make the code so that there is nothing like cpu score , the weightage should be based on the processor and the input should be selecting processor not entering cpu score.
+the processor should be mapped to a suitable score
+
+ALL google searches
+
+min max normalisation
+min max normalisation cost and beneficiary
 
 
+References that influenced my approach
 
+Weighted Sum Model (WSM) from Multi-Criteria Decision Analysis
+min max normalisation
 
+What you accepted, rejected, or modified from AI outputs
 
-
-
-
-
+Weighted scoring architecture design
+Min-max normalization implementation
+Enforcing weight sum validation in backend
+explanation logic
 
 
 
