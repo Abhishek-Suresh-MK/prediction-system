@@ -988,9 +988,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
             <th>#</th>
             <th>Laptop</th>
             <th>Price</th>
+            <th>Processor</th>
             <th>GPU</th>
             <th>RAM</th>
-            <th>Battery</th>
             <th>Score</th>
           </tr>
         </thead>
@@ -1015,7 +1015,7 @@ const PROFILES = {
 
 const CRITERIA = [
   { key:"price",         label:"Price",           sublabel:"(lower is better)", color:"#ff6584" },
-  { key:"cpu_score",     label:"CPU Performance", sublabel:"(benchmark score)",  color:"#6c63ff" },
+  { key:"cpu_score",     label:"CPU / Processor", sublabel:"(by processor model)", color:"#6c63ff" },
   { key:"gpu_score",     label:"GPU / Graphics",  sublabel:"(gaming/rendering)", color:"#f093fb" },
   { key:"ram_score",     label:"RAM",             sublabel:"(memory capacity)",  color:"#43e97b" },
   { key:"storage_score", label:"Storage",         sublabel:"(speed + size)",     color:"#38f9d7" },
@@ -1024,17 +1024,77 @@ const CRITERIA = [
   { key:"display_score", label:"Display Quality", sublabel:"(resolution/panel)", color:"#a8edea" }
 ];
 
+const CPU_OPTIONS = [
+  "── Apple Silicon ──",
+  "Apple M4 Max", "Apple M4 Pro", "Apple M4",
+  "Apple M3 Max", "Apple M3 Pro", "Apple M3",
+  "Apple M2 Max", "Apple M2 Pro", "Apple M2",
+  "Apple M1 Max", "Apple M1 Pro", "Apple M1",
+  "── Intel Core Ultra (Meteor Lake) ──",
+  "Intel Core Ultra 9 185H",
+  "Intel Core Ultra 7 165H", "Intel Core Ultra 7 165U", "Intel Core Ultra 7 155H",
+  "Intel Core Ultra 5 125H", "Intel Core Ultra 5 125U",
+  "── Intel Core i9 (13th / 14th Gen) ──",
+  "Intel Core i9-14900HX",
+  "Intel Core i9-13980HX", "Intel Core i9-13900HX",
+  "Intel Core i9-12900HX", "Intel Core i9-12900H",
+  "── Intel Core i7 (13th / 14th Gen) ──",
+  "Intel Core i7-14700HX",
+  "Intel Core i7-13700HX", "Intel Core i7-13700H",
+  "Intel Core i7-1365U", "Intel Core i7-1360P",
+  "── Intel Core i7 (12th Gen) ──",
+  "Intel Core i7-12700H",
+  "Intel Core i7-1260P", "Intel Core i7-1255U", "Intel Core i7-1165G7",
+  "── Intel Core i5 (12th / 13th / 14th Gen) ──",
+  "Intel Core i5-14500HX",
+  "Intel Core i5-13500H", "Intel Core i5-13420H",
+  "Intel Core i5-12500H",
+  "Intel Core i5-1340P", "Intel Core i5-1335U", "Intel Core i5-1235U", "Intel Core i5-1230U",
+  "Intel Core i5-1135G7",
+  "── Intel Core i3 ──",
+  "Intel Core i3-1315U", "Intel Core i3-1215U", "Intel Core i3-1115G4",
+  "── Intel Budget ──",
+  "Intel Celeron N5100", "Intel Celeron N4500", "Intel Pentium Silver N6000",
+  "── AMD Ryzen 9 ──",
+  "AMD Ryzen 9 7945HX", "AMD Ryzen 9 7940HS",
+  "AMD Ryzen 9 6900HX",
+  "AMD Ryzen 9 5900HX", "AMD Ryzen 9 5900HS",
+  "── AMD Ryzen 7 ──",
+  "AMD Ryzen 7 7745HX", "AMD Ryzen 7 7735HS", "AMD Ryzen 7 7730U",
+  "AMD Ryzen 7 6800H", "AMD Ryzen 7 6800U",
+  "AMD Ryzen 7 5800H", "AMD Ryzen 7 5800U", "AMD Ryzen 7 5700U",
+  "── AMD Ryzen 5 ──",
+  "AMD Ryzen 5 7640HS", "AMD Ryzen 5 7535HS", "AMD Ryzen 5 7530U",
+  "AMD Ryzen 5 6600H", "AMD Ryzen 5 6600U",
+  "AMD Ryzen 5 5600H", "AMD Ryzen 5 5600U", "AMD Ryzen 5 5500U",
+  "AMD Ryzen 5 3500U",
+  "── AMD Ryzen 3 ──",
+  "AMD Ryzen 3 7330U", "AMD Ryzen 3 5300U", "AMD Ryzen 3 3300U",
+  "── Qualcomm Snapdragon ──",
+  "Qualcomm Snapdragon X Elite", "Qualcomm Snapdragon X Plus"
+];
+
 const GPU_OPTIONS = [
+  "── NVIDIA RTX 40 Series ──",
   "RTX 4090","RTX 4080","RTX 4070 Ti","RTX 4070","RTX 4060 Ti","RTX 4060","RTX 4050",
+  "── NVIDIA RTX 30 Series ──",
   "RTX 3080","RTX 3070","RTX 3060","RTX 3050 Ti","RTX 3050",
+  "── NVIDIA RTX 20 Series ──",
   "RTX 2080","RTX 2070","RTX 2060",
+  "── NVIDIA GTX ──",
   "GTX 1660 Ti","GTX 1650 Ti","GTX 1650",
+  "── Apple Silicon GPU ──",
   "Apple M3 Pro GPU (18-core)","Apple M3 GPU (10-core)","Apple M2 GPU (10-core)","Apple M1 GPU (8-core)",
+  "── Intel Integrated ──",
   "Intel Arc","Intel Iris Xe","Intel UHD",
+  "── AMD Integrated ──",
   "AMD Radeon 680M","AMD Radeon Vega 8"
 ];
+
 const RAM_OPTIONS = ["4GB","8GB","12GB","16GB","18GB","24GB","32GB","48GB","64GB"];
+
 const STORAGE_OPTIONS = ["128GB SSD","256GB SSD","256GB NVMe","512GB SATA SSD","512GB NVMe","1TB SATA SSD","1TB NVMe","2TB NVMe","4TB NVMe"];
+
 const DISPLAY_OPTIONS = ["1366x768 TN","1920x1080 TN","1920x1080 IPS","1920x1080 IPS 120Hz","1920x1200 IPS","2560x1440 IPS","2560x1440 IPS 144Hz","2560x1600 IPS","2560x1600 IPS 165Hz","2560x1600 IPS 240Hz","2560x1664 IPS","2880x1800 IPS","2880x1800 OLED","4K IPS","4K IPS 144Hz","4K OLED 144Hz","3024x1964 Liquid Retina XDR"];
 
 // ─── STATE ──────────────────────────────────────────────
@@ -1129,8 +1189,16 @@ document.querySelectorAll(".mode-tab").forEach(tab => {
 });
 
 // ─── CUSTOM LAPTOPS ─────────────────────────────────────
-function makeSelectOptions(options) {
-  return options.map(o => `<option value="${o}">${o}</option>`).join("");
+function makeSelectOptions(options, placeholder) {
+  let html = placeholder ? `<option value="">-- ${placeholder} --</option>` : '';
+  options.forEach(o => {
+    if (o.startsWith('──')) {
+      html += `<option disabled style="color:#7a7a9a;font-weight:700;background:#12121a">${o}</option>`;
+    } else {
+      html += `<option value="${o}">${o}</option>`;
+    }
+  });
+  return html;
 }
 
 function addCustomLaptop() {
@@ -1155,8 +1223,10 @@ function addCustomLaptop() {
         <input type="number" class="cl-price" placeholder="95000">
       </div>
       <div class="input-group">
-        <label>CPU Score (0–100)</label>
-        <input type="number" class="cl-cpu" min="0" max="100" placeholder="75">
+        <label>CPU / Processor</label>
+        <select class="cl-cpu spec-select">
+          ${makeSelectOptions(CPU_OPTIONS, 'Select Processor')}
+        </select>
       </div>
       <div class="input-group">
         <label>Battery Life (hrs)</label>
@@ -1204,15 +1274,15 @@ function removeLaptop(id) {
 function getCustomLaptops() {
   const cards = document.querySelectorAll(".custom-laptop-card");
   return Array.from(cards).map(card => ({
-    name:     card.querySelector(".cl-name").value,
-    price:    card.querySelector(".cl-price").value,
-    cpu_score:card.querySelector(".cl-cpu").value,
-    battery:  card.querySelector(".cl-battery").value,
-    weight:   card.querySelector(".cl-weight").value,
-    gpu:      card.querySelector(".cl-gpu").value,
-    ram:      card.querySelector(".cl-ram").value,
-    storage:  card.querySelector(".cl-storage").value,
-    display:  card.querySelector(".cl-display").value
+    name:    card.querySelector(".cl-name").value,
+    price:   card.querySelector(".cl-price").value,
+    cpu:     card.querySelector(".cl-cpu").value,
+    battery: card.querySelector(".cl-battery").value,
+    weight:  card.querySelector(".cl-weight").value,
+    gpu:     card.querySelector(".cl-gpu").value,
+    ram:     card.querySelector(".cl-ram").value,
+    storage: card.querySelector(".cl-storage").value,
+    display: card.querySelector(".cl-display").value
   }));
 }
 
@@ -1343,7 +1413,7 @@ function renderResults(data) {
       <div>
         <div class="breakdown-crit">${b.criterion}</div>
         <div style="font-size:11px;color:var(--text-muted);margin-top:3px">
-          Raw: ${b.raw_value} ${b.unit} &nbsp;·&nbsp; ${b.vs_avg}
+          ${b.unit ? b.raw_value + " " + b.unit : b.raw_value} &nbsp;·&nbsp; ${b.vs_avg}
         </div>
       </div>
       <div class="breakdown-pct">${b.weight_pct}%</div>
@@ -1375,9 +1445,9 @@ function renderResults(data) {
       <td><span class="rank-badge ${badgeClass}">${lap.rank}</span></td>
       <td>${lap.name} ${tags}</td>
       <td style="font-family:var(--mono);font-size:12px">₹${lap.price.toLocaleString()}</td>
-      <td style="font-size:12px;color:var(--text-muted)">${lap.gpu || '—'}</td>
+      <td style="font-size:11px;color:var(--text-muted)">${lap.cpu || '—'}</td>
+      <td style="font-size:11px;color:var(--text-muted)">${lap.gpu || '—'}</td>
       <td style="font-size:12px">${lap.ram || '—'}</td>
-      <td style="font-size:12px">${lap.battery ? lap.battery+'h' : '—'}</td>
       <td><span class="score-chip">${(lap.final_score * 100).toFixed(1)}</span></td>
     `;
     tbody.appendChild(tr);
