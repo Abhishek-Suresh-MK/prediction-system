@@ -1,8 +1,13 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
+*.pyo
 *.py[codz]
 *$py.class
 
+.DS_Store
+.idea/
+.vscode/
 # C extensions
 *.so
 
@@ -136,6 +141,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
 .envrc
 .venv
 env/
