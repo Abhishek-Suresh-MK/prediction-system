@@ -4,8 +4,8 @@ services:
     runtime: python
     region: singapore
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 60 --access-logfile - --error-logfile -
+    buildCommand: pip install -r Source_Code/requirements.txt
+    startCommand: cd Source_Code && gunicorn app:app --workers 2 --threads 2 --bind 0.0.0.0:$PORT --timeout 60 --access-logfile - --error-logfile -
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
