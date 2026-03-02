@@ -1,4 +1,4 @@
-Your understanding of the problem
+# Your understanding of the problem
 
 So we have told about building a decision companion system.
 A particular type of decision companion system has not been mentioned in the mail.
@@ -10,7 +10,7 @@ the input data will be converted to numerical data.
 Normalisation and weights should be added appropriately.final we should rank the laptop according to their final score.
 
 
-Assumptions made
+# Assumptions made
 
 Specifications chosen are: CPU, GPU, RAM, Storage, Battery life, Weight, Display quality, and Price.
 Hardware internals like core count, thread count, and clock speed were excluded in this version because they are harder for average users to interpret and compare.
@@ -80,7 +80,7 @@ cost: normalised = (max_in_pool - value) / (max_in_pool - min_in_pool)
 
 final_score = Σ (normalised_score_i × weight_i / 100)
 
-Design Decisions and trade-offs
+# Design Decisions and trade-offs
 
 Static spec mapping (JSON instead of live API)
 We use a static spec_maps.json file to assign CPU and GPU scores.
@@ -97,7 +97,7 @@ The dataset is small and read-only.
 Using a database would add unnecessary complexity.
 JSON files are enough for this project.
 
-Edge Cases Considered
+# Edge Cases Considered
 
 Budget of zero 
 1) No laptops within budget — the response indicates zero results and no recommendation is made.
@@ -111,19 +111,25 @@ Budget of zero
 Edge cases considered
 initial budget filtering is done to avoid unecessary comparison.
 
-How to run the project
+# How to run the project
 
-# Clone the repository
+### Clone the repository
 git clone https://github.com/Abhishek-Suresh-MK/vonnue-laptop-decision-companion
 cd vonnue-laptop-decision-companion/Source_Code
 
-# Install dependencies
+### Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+#### Run the app
 python app.py
 
-host link: https://laptopiq-cwbx.onrender.com/
+# host link: https://laptopiq-cwbx.onrender.com/
+
+# What you would improve with more time
+
+1) Add more parameters like refresh rate,thermal performance etc
+2) make a bigger live database so that the user can easily select the laptop version instead of entering the specs.
+3) complete custom laptop building decider
 
 What you would improve with more time
 
