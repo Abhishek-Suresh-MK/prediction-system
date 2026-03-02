@@ -1,4 +1,4 @@
-All AI prompts used
+# All AI prompts used
 
 you are a software engineer, who will assist me in building a laptop selection decision companion system.
 
@@ -151,23 +151,31 @@ give the sample test cases for all situation
 make the code so that there is nothing like cpu score , the weightage should be based on the processor and the input should be selecting processor not entering cpu score.
 the processor should be mapped to a suitable score
 
-ALL google searches
+## ALL google searches
 
-min max normalisation
+min max normalisation,
 min max normalisation cost and beneficiary
 
 
-References that influenced my approach
+## References that influenced my approach
 
-Weighted Sum Model (WSM) from Multi-Criteria Decision Analysis
+Weighted Sum Model (WSM) from Multi-Criteria Decision Analysis,
 min max normalisation
 
-What you accepted, rejected, or modified from AI outputs
+## What you accepted, rejected, or modified from AI outputs
 
+accepted
 Weighted scoring architecture design
 Min-max normalization implementation
 Enforcing weight sum validation in backend
 explanation logic
+
+modified
+Separate result.html page was suggested but Replaced with single-page JSON API
+Single explanation text string was suggested Replaced with structured breakdown dict
+
+rejected
+Database (SQLite) for laptop storage
 
 
 
